@@ -49,10 +49,10 @@ emailRouter.route('/')
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-    //  console.log(error);
+      console.log(error);
       res.json({message: "error"}) // if error occurs send error as response to client
     } else {
- //     console.log('Email sent: ' + info.response);
+     //console.log('Email sent: ' + info.response);
       res.json({message: "success"})//if mail is sent successfully send Sent successfully as response
     }
   });
