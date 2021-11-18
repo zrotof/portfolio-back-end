@@ -8,6 +8,11 @@ const cors = require("./cors");
 const app = express();
 app.use(bodyParser.json());
 
+app.get('/', async (req, res) =>{
+
+    res.send("Le Back-end s'est bien lancé ...");
+
+ });
 
 app.use('/mail', require('./routes/emailRoutes'));
 

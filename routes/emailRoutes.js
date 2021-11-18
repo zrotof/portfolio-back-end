@@ -3,7 +3,16 @@ require('dotenv').config();
 var express=require('express');
 var cors = require('./../cors');
 const emailRouter = express.Router();
-var nodemailer = require('nodemailer');//importing node mailer
+var nodemailer = require('nodemailer');
+var mailGun = require('nodemailer-mailgun-transport');
+
+const auth = {
+  auth: {
+    api_key: process.env.KEY ,
+    domain: process.env.DOMAIN
+  }
+};
+
 
 emailRouter.route('/')
 
@@ -19,13 +28,7 @@ emailRouter.route('/')
     here we are using gmail as our service 
     In Auth object , we specify our email and password
   */
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL ,
-      pass: process.env.PASS
-    }
-  }); 
+  var transporter = nodemailer.createTransport(mailGun(auth)); 
 
   /*
     In mail options we specify from and to address, subject and HTML content.
@@ -34,10 +37,10 @@ emailRouter.route('/')
     html is our form details which we parsed using bodyParser.
   */
   var mailOptions = {
-    from: process.env.EMAIL,
+    from: req.body.email,
     to: process.env.EMAIL,
     subject: req.body.name+" | "+req.body.subject,
-    text: req.body.message +"\n\n"+req.body.email
+    text: req.body.message
   };
   
   /* Here comes the important part, sendMail is the method which actually sends email, it takes mail options and
@@ -46,10 +49,10 @@ emailRouter.route('/')
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-//      console.log(error);
+    //  console.log(error);
       res.json({message: "error"}) // if error occurs send error as response to client
     } else {
-//      console.log('Email sent: ' + info.response);
+ //     console.log('Email sent: ' + info.response);
       res.json({message: "success"})//if mail is sent successfully send Sent successfully as response
     }
   });
