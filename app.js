@@ -2,7 +2,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
-var bodyParser = require('body-parser')// importing body parser middleware to parse form content from HTML
+
+// importing body parser middleware to parse form content from HTML
+var bodyParser = require('body-parser')
 
 const cors = require("./cors");
 const app = express();
