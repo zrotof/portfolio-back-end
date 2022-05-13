@@ -16,7 +16,7 @@ app.get('/', async (req, res) =>{
 
  });
 
-app.use('/mail', require('./routes/emailRoutes'));
+app.use('/mail',require('./routes/emailRoutes'));
 
 //How tolisten to the server
 const port = process.env.PORT || 3000
