@@ -3,20 +3,23 @@ const cors = require('cors');
 
 const app = express();
 
-const whiteList =['http://localhost:4200'];
+const whiteList =['http://localhost:4200', 'https://www.sm-digitalizer.fr'];
 
 var corsOptionDelegate  = (req, callback) =>{
-    console.log("here")
 
     var corsOptions;
+
     if(whiteList.indexOf(req.header('Origin')) !== -1){
         corsOptions = { origin: true};
     }
-    else{
 
+
+    else{
         corsOptions = { origin: false};
     }
+    
     callback(null, corsOptions);
+
 }
 
 exports.cors = cors();
